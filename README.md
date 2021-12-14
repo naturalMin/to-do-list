@@ -20,5 +20,5 @@ deployment : https://naturalmin.github.io/to-do-list/
 * localStorage 활용 : to do set, get, remove 기능 구현해서 데이터 손실 방지.
 
 
-참고 강의
+### 참고 강의
 노마드코더 (https://nomadcoders.co/react-masterclass/lectures/3355)
