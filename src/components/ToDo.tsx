@@ -1,4 +1,4 @@
-import { Categories, IToDo, toDoState } from "../atoms";
+import { Categories, IToDo, SAVETODOS_KEY, toDoState } from "../atoms";
 import { useSetRecoilState } from "recoil";
 import React from "react";
 import styled from "styled-components";
@@ -17,6 +17,11 @@ const Text = styled.span`
   font-size: 18px;
   color: rgba(0,0,0);
   line-height: 1.5;  
+`;
+const Input = styled.input`
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
 `;
 const ButtonGroup = styled.div`  
 `;
@@ -39,23 +44,33 @@ function ToDo({ text, id, category}:IToDo) {
     setToDos((oldToDos) => {
       const targetIndex = oldToDos.findIndex(toDo => toDo.id === id); // 클릭했을때 해당 번호 추출
       const newToDo = {text, id, category: name as Categories};
-      return [...oldToDos.slice(0, targetIndex),
+      const newToDos = [...oldToDos.slice(0, targetIndex),
         newToDo, ...oldToDos.slice(targetIndex + 1),
-      ]; // toDo 추가하는 과정
+      ];
+      const stringfyTodos = JSON.stringify(newToDos);
+      localStorage.setItem(SAVETODOS_KEY,stringfyTodos);
+      return newToDos; // toDo 추가하는 과정
     })
   };
-  const DelToDos = () => {
+  const DelToDos = (event: React.FormEvent<HTMLButtonElement>) => {
+    const {
+      currentTarget: { parentElement },
+    } = event;
     setToDos((oldToDos) => {
-      const targetIndex = oldToDos.findIndex(toDo => toDo.id === id);
-      return [
-        ...oldToDos.slice(0, targetIndex),
-        ...oldToDos.slice(targetIndex + 1),
-        ];
-  })};
+      const newToDos = oldToDos.filter(toDo => toDo.id !== Number(parentElement?.id));
+      //해당하는 id만 아닌 것만 남겨둘 것.
+      const stringfyTodos = JSON.stringify(newToDos);
+      localStorage.setItem(SAVETODOS_KEY,stringfyTodos);
+      return newToDos; //삭제할 부분 filter로 거른 후 배열 재생성 및 저장
+  });
+};
   
   return (
-    <List>      
-      <Text>{text}</Text>
+    <List id = {id as any}>            
+      <Text>
+        <Input type = "checkbox" />
+        {text}
+      </Text>
       <ButtonGroup>
         {category !== Categories.DOING && (
         <Button name = {Categories.DOING} onClick = {onClick}>🟢</Button>
@@ -66,10 +81,9 @@ function ToDo({ text, id, category}:IToDo) {
         {category !== Categories.DONE && (
         <Button name = {Categories.DONE} onClick = {onClick}>🔵</Button>
         )} 
-        {/* // 해당되는 카테고리를 클릭하지 않을 때 버튼을 보여라 */}
-        <Button onClick = {DelToDos}>X</Button>
+        {/* // 해당되는 카테고리를 클릭하지 않을 때 버튼을 보여라 */}        
       </ButtonGroup>    
-      
+      <Button onClick = {DelToDos}>X</Button>
     </List>
   );
 }
