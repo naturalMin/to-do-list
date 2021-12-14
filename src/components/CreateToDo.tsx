@@ -7,6 +7,7 @@ const Form = styled.form`
   margin: 15px 0px;
   padding: 0 20px;
   height: 32px;
+  line-height: 1.2;
   display: flex;
   justify-content : space-between ;
 `;
@@ -15,18 +16,17 @@ const Input = styled.input`
   height: 100%;
   border: 0;
   border-radius: 5px;
-  padding: 0 20px;
-  margin-right: 5px;      
+  padding: 0 20px;        
 `;
 const Button = styled.button`
   cursor: pointer;
   width: 32px;
-  height: 100%;
-  text-align: center;
-  font-size: 20px;
+  height: 32px;    
+  font-size: 25px;
   border-radius: 5px;
   border: 0;
-  background-color: rgba(255,255,255,0.5);
+  background-color: rgba(255, 255, 255, 0.5);
+  color: ${props => props.theme.textColor};  
   &:hover {
     background-color: ${props => props.theme.accentColor};
   }  
@@ -53,8 +53,8 @@ function CreateToDo() {
   return (    
       <Form onSubmit = {handleSubmit(handleValid)}>
         <Input 
-        {...register("toDo", { required: "Please Write a To Do."})}
-        placeholder = "New To do..."         
+        {...register("toDo", { required: "Please Write a To Do.", maxLength: 28 })}
+        placeholder = "New To do...(type Limit: 28)"         
         />
         <Button>+</Button>
       </Form>

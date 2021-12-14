@@ -6,17 +6,18 @@ import styled from "styled-components";
 const List = styled.li`      
   margin: 10px auto;
   width: 100%;
-  padding: 10px 20px;
+  padding: 10px;
   background-color: #f6e58d;
   box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
   border-radius: 5px;   
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between;   
 `;
 const Text = styled.span`
-  font-size: 18px;
+  width: 90%;
+  font-size: 15px;
   color: rgba(0,0,0);
-  line-height: 1.5;  
+  line-height: 1.5;   
 `;
 const Input = styled.input`
   width: 15px;
@@ -24,13 +25,13 @@ const Input = styled.input`
   margin-right: 5px;
 `;
 const ButtonGroup = styled.div`  
+  width: 18%;
 `;
 const Button = styled.button`  
   border: 0;
-  border-radius: 3px;
-  padding: 5px;
+  border-radius: 3px;  
   background-color: transparent;
-  font-size: 16px;
+  font-size: 15px;
   cursor: pointer;
   &:hover {
     text-shadow: 1px 1px 2px gray;
@@ -81,8 +82,8 @@ function ToDo({ text, id, category}:IToDo) {
         {category !== Categories.DONE && (
         <Button name = {Categories.DONE} onClick = {onClick}>🔵</Button>
         )} 
-        {/* // 해당되는 카테고리를 클릭하지 않을 때 버튼을 보여라 */}        
-      </ButtonGroup>    
+        {/* // 해당되는 카테고리를 클릭하지 않을 때 버튼을 보여라 */}                
+      </ButtonGroup>   
       <Button onClick = {DelToDos}>X</Button>
     </List>
   );

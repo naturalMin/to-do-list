@@ -9,12 +9,12 @@ const Form = styled.form`
   height: 32px;
 `;
 const Select = styled.select`
-  width: 90%;
+  width: 100%;
   height: 90%;
   border: 0;
   border-radius: 5px;
   padding: 0 18px;
-  font-size: 15px;
+  font-size: 15px;  
 `;
 const Option = styled.option`
   font-size: 15px;
